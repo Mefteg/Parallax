@@ -118,8 +118,6 @@ function ParallaxMain(_parentId)
 
 function preload ()
 {
-	this.load.setBaseURL('http://labs.phaser.io');
-
 	let layerCount = ParallaxConfig.layers.length;
 	for (let i = 0; i < layerCount; ++i)
 	{
