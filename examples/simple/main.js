@@ -4,5 +4,5 @@ window.onload = Main;
 
 function Main()
 {
-	ParallaxMain('parallax');
+	let parallax = new Parallax('parallax');
 }
