@@ -2,13 +2,33 @@
 
 class Parallax
 {
-	constructor(_parentId)
+	constructor()
 	{
 		this.layers = [];
 		this.mouseInside = false;
-		this.config = {};
+		this.config = this.createDefaultConfig();
+	}
 
-		this.createConfigFromDOM(_parentId);
+	createDefaultConfig()
+	{
+		let config = {};
+		config['width'] = 300;
+		config['height'] = 200;
+		config['parallax_x'] = 0;
+		config['parallax_y'] = 0;
+
+		config['layers'] = [];
+
+		return config;
+	}
+
+	start(_parentId, _config)
+	{
+		if (_config == null)
+		{
+			this.createConfigFromDOM(_parentId);
+		}
+
 		this.removeChildren(_parentId);
 
 		let gameConfig = {
@@ -80,6 +100,8 @@ class Parallax
 			// Get layer attributes.
 			layer['name'] = image.getAttribute('name');
 			layer['src'] = image.getAttribute('src');
+			layer['x'] = parseInt(image.getAttribute('x'));
+			layer['y'] = parseInt(image.getAttribute('y'));
 			layer['parallax_ratio_x'] = parseFloat(image.getAttribute('parallax-ratio-x'));
 			layer['parallax_ratio_y'] = parseFloat(image.getAttribute('parallax-ratio-y'));
 
@@ -146,8 +168,8 @@ class Parallax
 			let layerConfig = this.config.layers[i];
 
 			let layer = this.layers[i];
-			layer.x = (canvasWidth / 2) - (ratioX * this.config.parallax_x * layerConfig.parallax_ratio_x);
-			layer.y = (canvasHeight / 2) - (ratioY * this.config.parallax_y * layerConfig.parallax_ratio_y);
+			layer.x = layerConfig.x - (ratioX * this.config.parallax_x * layerConfig.parallax_ratio_x);
+			layer.y = layerConfig.y - (ratioY * this.config.parallax_y * layerConfig.parallax_ratio_y);
 		}
 	}
 }
